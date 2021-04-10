@@ -61,7 +61,10 @@
         <!-- This footer should be hidden by default and shown when there are todos -->
         <footer class="footer" x-show="todos.length">
           <!-- This should be `0 items left` by default -->
-          <span class="todo-count"><strong>0</strong> item left</span>
+          <span class="todo-count">
+            <strong x-text="activeTodos.length"></strong>
+            <span x-text="todos.length===1?'item':'items'"></span> left
+          </span>
           <!-- Remove this if you don't implement routing -->
           <ul class="filters">
             <li>
@@ -75,7 +78,9 @@
             </li>
           </ul>
           <!-- Hidden if no completed items are left ↓ -->
-          <button class="clear-completed">Clear completed</button>
+          <button class="clear-completed" x-show="completedTodos.length">
+            Clear completed
+          </button>
         </footer>
       </section>
       <footer class="info">
@@ -105,6 +110,14 @@
           },
           destroy(delTodo) {
             this.todos = this.todos.filter((todo) => todo.id != delTodo.id);
+          },
+          //not complete todo computed method
+          get activeTodos() {
+            return this.todos.filter((todo) => !todo.completed);
+          },
+          // complete todo computed method
+          get completedTodos() {
+            return this.todos.filter((todo) => todo.completed);
           },
         };
       };
