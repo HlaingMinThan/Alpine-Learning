@@ -15,52 +15,21 @@
     ></script>
   </head>
   <body class="p-10 flex justify-center items-center h-screen">
-    <div
-      class="w-full max-w-xs"
-      x-data="{
-        data:null,
-        form:{
-            username:''
-        },
-        submit(){
-            fetch('https://reqres.in/api/user',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify(this.form)
-            })
-            .then((res)=>res.json())
-            .then((data)=>this.data=data)
-        }
-      }"
-    >
-      <form
-        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        @submit.prevent="submit"
-      >
-        <div class="mb-4">
-          <label
-            class="block text-gray-700 text-sm font-bold mb-2"
-            for="username"
-          >
-            Username
-          </label>
-          <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="username"
-            type="text"
-            placeholder="Username"
-            x-model="form.username"
-          />
-        </div>
-      </form>
-      <template x-if="data">
-        <div>
-          <p>Username is <span x-text="data.username"></span></p>
-          <p>Username is created at<span x-text="data.createdAt"></span></p>
-        </div>
-      </template>
+    <div x-data="{show:false}">
+      <!-- blue circle -->
+      <div
+        x-show="show"
+        x-transition:enter="transition duration-500 transform"
+        x-transition:enter-start="opacity-0  scale-125"
+        x-transition:enter-end="opacity-100  scale-100"
+        x-transition:leave="transition duration-500 transform"
+        x-transition:leave-start="opacity-100  scale-100"
+        x-transition:leave-end="opacity-0  scale-125"
+        class="mx-auto mb-5 bg-blue-500 rounded-full w-16 h-16"
+      ></div>
+      <button class="bg-green-500 text-white p-3 rounded" @click="show=!show">
+        toggle circle
+      </button>
     </div>
   </body>
 </html>
