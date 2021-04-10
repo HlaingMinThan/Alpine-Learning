@@ -14,30 +14,32 @@
       defer
     ></script>
   </head>
-  <body class="p-10 flex justify-center items-center h-screen">
-    <nav x-data="{show:false}">
-      <a href="#" class="ml-3" @click.prevent="show=!show">Toggle Links</a>
-      <ul
-        class="absolute bg-blue-500 text-white p-2 rouned mt-5"
-        x-show="show"
-        x-transition:enter="transition  duration-300 transform"
-        x-transition:enter-start="opacity-0 scale-0"
-        x-transition:leave="transition  duration-300 transform"
-        x-transition:leave-end="opacity-0 scale-0 "
+  <body>
+    <div class="flex justify-center items-center h-screen" x-data>
+      <button
+        class="bg-green-500 p-2 rounded text-white"
+        @click="$dispatch('flash','hey there')"
       >
-        <li class="px-2 hover:bg-blue-300 py-3 px-5 cursor-pointer">
-          First Link
-        </li>
-        <li class="px-2 hover:bg-blue-300 py-3 px-5 cursor-pointer">
-          First Link
-        </li>
-        <li class="px-2 hover:bg-blue-300 py-3 px-5 cursor-pointer">
-          First Link
-        </li>
-        <li class="px-2 hover:bg-blue-300 py-3 px-5 cursor-pointer">
-          First Link
-        </li>
-      </ul>
-    </nav>
+        Flash Message
+      </button>
+    </div>
+
+    <!-- flash component -->
+    <div
+      x-data="{
+        show:false,
+        message:'',
+        flash($event){
+          this.message=$event.detail;
+          this.show=true;
+          setTimeout(()=>this.show=false,3000)
+        }
+      }"
+      x-show.transition="show"
+      class="fixed bottom-0 right-0 mr-5 mb-5 bg-green-500 rounded text-white px-7 py-3 text-center"
+      @flash.window="flash($event)"
+    >
+      <span x-text="message"></span>
+    </div>
   </body>
 </html>
