@@ -6,8 +6,6 @@
     <title>Template • TodoMVC</title>
     <link rel="stylesheet" href="node_modules/todomvc-common/base.css" />
     <link rel="stylesheet" href="node_modules/todomvc-app-css/index.css" />
-    <!-- CSS overrides - remove if you don't need it -->
-    <link rel="stylesheet" href="css/app.css" />
     <script
       src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
       defer
@@ -27,7 +25,7 @@
           />
         </header>
         <!-- This section should be hidden by default and shown when there are todos -->
-        <section class="main">
+        <section class="main" @click.away="currentEditTodoId=null">
           <input id="toggle-all" class="toggle-all" type="checkbox" />
           <label for="toggle-all">Mark all as complete</label>
           <template x-for="todo in filteredTodos" :key="todo.id">
@@ -42,7 +40,12 @@
                 </div>
                 <input class="edit" value="Create a TodoMVC template" />
               </li> -->
-              <li :class="{completed:todo.completed}">
+              <li
+                :class="{
+                  'completed':todo.completed,
+                  'editing':currentEditTodoId===todo.id
+                }"
+              >
                 <div class="view">
                   <input
                     class="toggle"
@@ -50,10 +53,15 @@
                     x-model="todo.completed"
                     @click="todo.completed!=todo.completed;"
                   />
-                  <label x-text="todo.body"></label>
+                  <label x-text="todo.body" @dblclick="edit(todo)"></label>
                   <button class="destroy" @click="destroy(todo)"></button>
                 </div>
-                <input class="edit" value="Rule the web" />
+                <input
+                  class="edit"
+                  x-model="todo.body"
+                  @keyup.enter="currentEditTodoId=null;"
+                  @keyup.escape="cancelEdit(todo)"
+                />
               </li>
             </ul>
           </template>
@@ -63,7 +71,7 @@
           <!-- This should be `0 items left` by default -->
           <span class="todo-count">
             <strong x-text="activeTodos.length"></strong>
-            <span x-text="todos.length===1?'item':'items'"></span> left
+            <span x-text="activeTodos.length===1?'item':'items'"></span> left
           </span>
           <!-- Remove this if you don't implement routing -->
           <ul class="filters">
@@ -104,10 +112,11 @@
       </section>
       <footer class="info">
         <p>Double-click to edit a todo</p>
-        <!-- Remove the below line ↓ -->
-        <p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+
         <!-- Change this out with your name and url ↓ -->
-        <p>Created by <a href="http://todomvc.com">you</a></p>
+        <p>
+          Created by <a href="http://creativecoder.blog">Hlaing Min Than</a>
+        </p>
         <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
       </footer>
     </div>
@@ -118,6 +127,17 @@
       let todoFun = () => {
         return {
           todos: [],
+          currentEditTodoId: null,
+          currentEditTodoBody: "",
+          newTodo: "",
+          edit(todo) {
+            this.currentEditTodoId = todo.id;
+            this.currentEditTodoBody = todo.body; //when edit mood,get initial unedit data
+          },
+          cancelEdit(todo) {
+            todo.body = this.currentEditTodoBody;
+            this.currentEditTodoId = null;
+          },
           filterBy: "all",
           get filteredTodos() {
             if (this.filterBy === "all") {
@@ -130,7 +150,6 @@
               return this.completedTodos;
             }
           },
-          newTodo: "",
           addTodo() {
             this.todos.push({
               id: Date.now(),
