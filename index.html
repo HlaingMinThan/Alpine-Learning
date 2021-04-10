@@ -14,68 +14,53 @@
       defer
     ></script>
   </head>
-  <body class="p-10">
-    <div x-data="{currentTab:1}">
-      <!-- buttons -->
-      <div>
-        <button
-          class="bg-green-500 text-white px-5 py-2 rounded"
-          @click="currentTab=1"
-        >
-          1
-        </button>
-        <button
-          class="bg-green-500 text-white px-5 py-2 rounded"
-          @click="currentTab=2"
-        >
-          2
-        </button>
-        <button
-          class="bg-green-500 text-white px-5 py-2 rounded"
-          @click="currentTab=3"
-        >
-          3
-        </button>
-      </div>
-      <!-- tabs -->
-      <div>
-        <div
-          class="w-96 border border-gray-200 my-4 p-4"
-          x-show="currentTab===1"
-        >
-          <h1 class="text-2xl font-semibold my-4">First Tab</h1>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum expedita
-          exercitationem eligendi odit minus delectus suscipit quidem similique
-          ad nihil! Voluptate minima nulla, fugit possimus numquam facilis?
-          Debitis, numquam quis.
+  <body class="p-10 flex justify-center items-center h-screen">
+    <div
+      class="w-full max-w-xs"
+      x-data="{
+        data:null,
+        form:{
+            username:''
+        },
+        submit(){
+            fetch('https://reqres.in/api/user',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(this.form)
+            })
+            .then((res)=>res.json())
+            .then((data)=>this.data=data)
+        }
+      }"
+    >
+      <form
+        class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        @submit.prevent="submit"
+      >
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+          >
+            Username
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Username"
+            x-model="form.username"
+          />
         </div>
-        <div
-          class="w-96 border border-gray-200 my-4 p-4"
-          x-show="currentTab===2"
-        >
-          <h1 class="text-2xl font-semibold my-4">Second Tab</h1>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum expedita
-          exercitationem eligendi odit minus delectus suscipit quidem similique
-          ad nihil! Voluptate minima nulla, fugit possimus numquam facilis?
-          Debitis, numquam quis. Lorem, ipsum dolor sit amet consectetur
-          adipisicing elit. Neque, non corporis dicta sequi ullam ex totam
-          deleniti unde assumenda, amet eligendi harum. Alias a, illum delectus
-          tempore eligendi adipisci cum!
+      </form>
+      <template x-if="data">
+        <div>
+          <p>Username is <span x-text="data.username"></span></p>
+          <p>Username is created at<span x-text="data.createdAt"></span></p>
         </div>
-        <div
-          class="w-96 border border-gray-200 my-4 p-4"
-          x-show="currentTab===3"
-        >
-          <h1 class="text-2xl font-semibold my-4">Third Tab</h1>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum expedita
-          exercitationem eligendi odit minus delectus suscipit quidem similique
-          ad nihil! Voluptate minima nulla, fugit possimus numquam facilis?
-          Debitis, numquam quis. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Reprehenderit eveniet cupiditate amet nemo
-          consequatur minus culpa earum est explicabo porro aliquam beatae
-          facilis fugiat, iusto voluptate unde nobis obcaecati soluta.
-        </div>
-      </div>
+      </template>
     </div>
   </body>
 </html>
