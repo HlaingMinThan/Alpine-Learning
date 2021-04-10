@@ -24,6 +24,9 @@
 				body:this.newTodo
 			});
 			this.newTodo='';
+		},
+		destroy(delTodo){
+			 this.todos=this.todos.filter(todo=>todo.id!=delTodo.id)
 		}
 	  }"
     >
@@ -58,7 +61,7 @@
                 <div class="view">
                   <input class="toggle" type="checkbox" />
                   <label x-text="todo.body"></label>
-                  <button class="destroy"></button>
+                  <button class="destroy" @click="destroy(todo)"></button>
                 </div>
                 <input class="edit" value="Rule the web" />
               </li>
