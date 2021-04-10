@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+  </head>
+  <body class="p-10">
+    <div x-data="{first:0,second:0}">
+      <div class="text-lg mb-3 pt-0">
+        <label class="text-blue-500 mb-2">First Number</label>
+        <input
+          type="text"
+          x-model.number="first"
+          placeholder=""
+          class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+        />
+      </div>
+      <div class="text-lg mb-3 pt-0">
+        <label class="text-blue-500 mb-2">Second Number</label>
+        <input
+          type="text"
+          x-model.number="second"
+          class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+        />
+      </div>
+      <div class="text-lg text-blue-500 mb-2">
+        Result-<output x-text="first+second"></output>
+      </div>
+    </div>
+  </body>
+</html>
