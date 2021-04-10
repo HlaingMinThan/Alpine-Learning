@@ -78,7 +78,11 @@
             </li>
           </ul>
           <!-- Hidden if no completed items are left ↓ -->
-          <button class="clear-completed" x-show="completedTodos.length">
+          <button
+            class="clear-completed"
+            x-show="completedTodos.length"
+            @click="todos=activeTodos"
+          >
             Clear completed
           </button>
         </footer>
