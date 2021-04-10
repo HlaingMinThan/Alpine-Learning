@@ -58,7 +58,7 @@
                 <input
                   class="edit"
                   x-model="todo.body"
-                  @keyup.enter="currentEditTodoId=null;"
+                  @keyup.enter="updateTodo(todo)"
                   @keyup.escape="cancelEdit(todo)"
                 />
               </li>
@@ -129,6 +129,10 @@
             this.currentEditTodoId = todo.id;
             this.currentEditTodoBody = todo.body; //when edit mood,get initial unedit data
           },
+          updateTodo(todo) {
+            if (!todo.body) this.destroy(todo);
+            this.currentEditTodoId = null;
+          },
           cancelEdit(todo) {
             todo.body = this.currentEditTodoBody;
             this.currentEditTodoId = null;
@@ -146,6 +150,7 @@
             }
           },
           addTodo() {
+            if (!this.newTodo) return;
             this.todos.push({
               id: Date.now(),
               body: this.newTodo,
