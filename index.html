@@ -24,22 +24,21 @@
             autofocus
           />
         </header>
-        <!-- This section should be hidden by default and shown when there are todos -->
-        <section class="main" @click.away="currentEditTodoId=null">
-          <input id="toggle-all" class="toggle-all" type="checkbox" />
+        <section
+          class="main"
+          @click.away="currentEditTodoId=null"
+          x-show="filteredTodos.length"
+        >
+          <input
+            id="toggle-all"
+            class="toggle-all"
+            type="checkbox"
+            x-model="allComplete"
+            @click="toggleAll"
+          />
           <label for="toggle-all">Mark all as complete</label>
           <template x-for="todo in filteredTodos" :key="todo.id">
             <ul class="todo-list">
-              <!-- These are here just to show the structure of the list items -->
-              <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-              <!-- <li class="completed">
-                <div class="view">
-                  <input class="toggle" type="checkbox" checked />
-                  <label>Taste JavaScript</label>
-                  <button class="destroy"></button>
-                </div>
-                <input class="edit" value="Create a TodoMVC template" />
-              </li> -->
               <li
                 :class="{
                   'completed':todo.completed,
@@ -66,14 +65,12 @@
             </ul>
           </template>
         </section>
-        <!-- This footer should be hidden by default and shown when there are todos -->
         <footer class="footer" x-show="todos.length">
-          <!-- This should be `0 items left` by default -->
           <span class="todo-count">
             <strong x-text="activeTodos.length"></strong>
             <span x-text="activeTodos.length===1?'item':'items'"></span> left
           </span>
-          <!-- Remove this if you don't implement routing -->
+          <!-- i'm just using tab system -->
           <ul class="filters">
             <li>
               <a
@@ -100,7 +97,6 @@
               >
             </li>
           </ul>
-          <!-- Hidden if no completed items are left ↓ -->
           <button
             class="clear-completed"
             x-show="completedTodos.length"
@@ -113,7 +109,6 @@
       <footer class="info">
         <p>Double-click to edit a todo</p>
 
-        <!-- Change this out with your name and url ↓ -->
         <p>
           Created by <a href="http://creativecoder.blog">Hlaing Min Than</a>
         </p>
@@ -168,6 +163,15 @@
           // complete todo computed method
           get completedTodos() {
             return this.todos.filter((todo) => todo.completed);
+          },
+          get allComplete() {
+            return this.completedTodos.length === this.todos.length;
+          },
+          toggleAll() {
+            let allComplete = this.allComplete;
+            this.filteredTodos.forEach((todo) => {
+              todo.completed = !allComplete;
+            });
           },
         };
       };
