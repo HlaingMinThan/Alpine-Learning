@@ -15,26 +15,66 @@
     ></script>
   </head>
   <body class="p-10">
-    <div x-data="{first:0,second:0}">
-      <div class="text-lg mb-3 pt-0">
-        <label class="text-blue-500 mb-2">First Number</label>
-        <input
-          type="text"
-          x-model.number="first"
-          placeholder=""
-          class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
-        />
+    <div x-data="{currentTab:1}">
+      <!-- buttons -->
+      <div>
+        <button
+          class="bg-green-500 text-white px-5 py-2 rounded"
+          @click="currentTab=1"
+        >
+          1
+        </button>
+        <button
+          class="bg-green-500 text-white px-5 py-2 rounded"
+          @click="currentTab=2"
+        >
+          2
+        </button>
+        <button
+          class="bg-green-500 text-white px-5 py-2 rounded"
+          @click="currentTab=3"
+        >
+          3
+        </button>
       </div>
-      <div class="text-lg mb-3 pt-0">
-        <label class="text-blue-500 mb-2">Second Number</label>
-        <input
-          type="text"
-          x-model.number="second"
-          class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
-        />
-      </div>
-      <div class="text-lg text-blue-500 mb-2">
-        Result-<output x-text="first+second"></output>
+      <!-- tabs -->
+      <div>
+        <div
+          class="w-96 border border-gray-200 my-4 p-4"
+          x-show="currentTab===1"
+        >
+          <h1 class="text-2xl font-semibold my-4">First Tab</h1>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum expedita
+          exercitationem eligendi odit minus delectus suscipit quidem similique
+          ad nihil! Voluptate minima nulla, fugit possimus numquam facilis?
+          Debitis, numquam quis.
+        </div>
+        <div
+          class="w-96 border border-gray-200 my-4 p-4"
+          x-show="currentTab===2"
+        >
+          <h1 class="text-2xl font-semibold my-4">Second Tab</h1>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum expedita
+          exercitationem eligendi odit minus delectus suscipit quidem similique
+          ad nihil! Voluptate minima nulla, fugit possimus numquam facilis?
+          Debitis, numquam quis. Lorem, ipsum dolor sit amet consectetur
+          adipisicing elit. Neque, non corporis dicta sequi ullam ex totam
+          deleniti unde assumenda, amet eligendi harum. Alias a, illum delectus
+          tempore eligendi adipisci cum!
+        </div>
+        <div
+          class="w-96 border border-gray-200 my-4 p-4"
+          x-show="currentTab===3"
+        >
+          <h1 class="text-2xl font-semibold my-4">Third Tab</h1>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum expedita
+          exercitationem eligendi odit minus delectus suscipit quidem similique
+          ad nihil! Voluptate minima nulla, fugit possimus numquam facilis?
+          Debitis, numquam quis. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Reprehenderit eveniet cupiditate amet nemo
+          consequatur minus culpa earum est explicabo porro aliquam beatae
+          facilis fugiat, iusto voluptate unde nobis obcaecati soluta.
+        </div>
       </div>
     </div>
   </body>
